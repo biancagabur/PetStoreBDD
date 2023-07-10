@@ -5,3 +5,6 @@
 /.idea/misc.xml
 /.idea/runConfigurations.xml
 /.idea/workspace.xml
+/.idea/vcs.xml
+/.idea/uiDesigner.xml
+/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
