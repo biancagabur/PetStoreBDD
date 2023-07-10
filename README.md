@@ -6,6 +6,5 @@ In this project I am testing a local copy of [SwaggerUI PetStore API v3](https:/
 To create the local copy, I am using [Docker](https://www.docker.com/)
 ```
 docker run --name petstore -d -p 12345:8080 swaggerapi/petstore3:unstable
-
 ```
 
