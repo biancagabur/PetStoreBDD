@@ -1,7 +1,7 @@
 
 # PetStoreBDD testing
 
-In this project I am testing a local copy of [SwaggerUI PetStore API v3](https://petstore3.swagger.io/) using [Cucumber](https://cucumber.io/) and [RESTassured](https://rest-assured.io/).
+In this project I am testing a local copy of [Swagger PetStore API v3](https://petstore3.swagger.io/) using [Cucumber](https://cucumber.io/) and [RESTassured](https://rest-assured.io/).
 
 To create the local copy, I am using [Docker](https://www.docker.com/)
 ```
