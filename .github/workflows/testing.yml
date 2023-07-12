@@ -1,20 +1,9 @@
 name: Run tests
-on:
-  pull_request_target:
-    types:
-      - opened
-      - edited
-      - synchronize
-      - reopened
-    branches:
-      -main
+on: [push, pull_request]
 
 jobs:
   test:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./src/test/java/
 
     strategy:
       matrix:
@@ -27,6 +16,8 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: ${{ matrix.java-version }}
+          distribution: 'temurin'
+          cache: maven
 
       - name: Test execution
         run: mvn clean test
