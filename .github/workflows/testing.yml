@@ -1,6 +1,7 @@
 name: Run tests
 on:
-  pull-requst:
+  pull_request:
+    types: [opened, reopened]
     branches:
       -main
 

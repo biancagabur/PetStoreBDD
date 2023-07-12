@@ -14,3 +14,6 @@ Open the command prompt and navigate to the folder in which pom.xml file is pres
 Run the below Maven command.
 
     mvn clean test
+Once the execution completes report will be generated in below folder.
+
+**Report:** 		*target/reports*<br>
