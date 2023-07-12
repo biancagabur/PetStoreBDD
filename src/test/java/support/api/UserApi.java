@@ -3,6 +3,9 @@ package support.api;
 import org.apache.http.HttpStatus;
 import support.domain.User;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static io.restassured.RestAssured.given;
 
 public class UserApi {
@@ -23,5 +26,17 @@ public class UserApi {
                 when().
                 get(USER_ENDPOINT).
                 thenReturn().path("username");
+    }
+
+    public void deleteAllUsers(){
+        List<String> users = Arrays.asList("biancag");
+        for(String user : users){
+            given()
+                .pathParam("name", user)
+            .when()
+                .delete(USER_ENDPOINT)
+            .then()
+                .statusCode(HttpStatus.SC_OK);
+        }
     }
 }

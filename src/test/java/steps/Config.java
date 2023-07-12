@@ -1,12 +1,18 @@
 package steps;
 
+import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
-import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
+import support.api.UserApi;
 
 public class Config {
+    private UserApi userApi;
+
+    public Config(){
+        userApi = new UserApi();
+    }
     @Before
     public void setup(){
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
@@ -17,12 +23,13 @@ public class Config {
                 .addHeader("Authorization", getToken())
                 .setContentType(ContentType.JSON)
                 .build();
-        RestAssured.responseSpecification = new ResponseSpecBuilder()
-                .expectContentType(ContentType.JSON)
-                .build();
     }
 
     private String getToken() {
         return "great access";
+    }
+    @After("@deleteAllUsers")
+    public void deleteAllTheUsers(){
+        userApi.deleteAllUsers();
     }
 }
