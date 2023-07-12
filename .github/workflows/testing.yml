@@ -1,0 +1,33 @@
+name: Run tests
+on:
+  pull-requst:
+    branches:
+      -main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./src/test/java/
+
+    strategy:
+      matrix:
+        java-version: [18]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: ${{ matrix.java-version }}
+
+      - name: Test execution
+        run: mvn clean test
+      - name: Upload test execution report
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: report
+          path: target/reports
