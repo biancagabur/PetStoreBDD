@@ -1,13 +1,5 @@
 name: Run tests
-on:
-  pull_request_target:
-    types:
-      - opened
-      - edited
-      - synchronize
-      - reopened
-    branches:
-      -main
+on: [push, pull_request]
 
 jobs:
   test:
