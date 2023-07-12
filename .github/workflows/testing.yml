@@ -1,7 +1,11 @@
 name: Run tests
 on:
-  pull_request:
-    types: [opened, reopened]
+  pull_request_target:
+    types:
+      - opened
+      - edited
+      - synchronize
+      - reopened
     branches:
       -main
 
