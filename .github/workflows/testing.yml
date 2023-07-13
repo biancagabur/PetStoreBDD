@@ -20,7 +20,7 @@ jobs:
           cache: maven
 
       - name: Test execution
-        run: mvn clean test
+        run: mvn test
       - name: Upload test execution report
         if: always()
         uses: actions/upload-artifact@v3
