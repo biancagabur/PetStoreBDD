@@ -3,6 +3,8 @@ package steps;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.restassured.response.Response;
+import org.apache.http.HttpStatus;
 import support.api.PetApi;
 import support.domain.Pet;
 
@@ -16,11 +18,12 @@ import static org.hamcrest.Matchers.empty;
 public class PetStepDefinitions {
     private PetApi petApi;
     private List<Pet> actualPets;
+    private Response actualPetResponse;
     public PetStepDefinitions(){
         petApi = new PetApi();
     }
-    @Given("that I have available pets")
-    public void thatIHaveAvailablePets() {
+    @Given("that I have {word} pets")
+    public void thatIHaveAvailablePets(String status) {
 //        Pet pet = Pet.builder().build();
 //        ObjectMapper objectMapper = new ObjectMapper();
 //        String json = objectMapper.writeValueAsString(pet);
@@ -29,12 +32,29 @@ public class PetStepDefinitions {
 
     @When("I search for all {word} pets")
     public void iSearchForAllAvailablePets(String status) {
-        actualPets = petApi.getPetByStatus(status);
-        System.out.println("anything");
+        actualPetResponse = petApi.getPetResponseByStatus(status);
+        actualPets = actualPetResponse.body().jsonPath().getList("", Pet.class);
     }
 
-    @Then("I receive a list of available pets")
-    public void iReceiveAListOfAvailablePets() {
+    @Then("I receive a list of {word} pets")
+    public void iReceiveAListOfAvailablePets(String status) {
+        actualPetResponse
+            .then()
+                .statusCode(HttpStatus.SC_OK)
+                .body(
+                    "size()",is(actualPets.size()),
+                        "findAll { it.status == '"+ status +"'}.size()", is(actualPets.size())
+                    );
         assertThat(actualPets,is(not(empty())));
+    }
+
+    @Given("that I do not have any {word} pets")
+    public void thatIDoNotHaveAnySoldPets(String status) {
+        petApi.deleteAllPetsByStatus(status);
+    }
+
+    @Then("I receive a list of pets of size {int} pets")
+    public void iReceiveAListOfSoldPetsWithSize(int size) {
+        assertThat(actualPets.size(),is(size));
     }
 }
