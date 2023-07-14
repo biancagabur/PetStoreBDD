@@ -10,8 +10,6 @@ Feature: Manage a pet in the PetStore
     When I search for all pending pets
     Then I receive a list of pending pets
 
-
-
   Scenario: Don't list any pets
     Given that I do not have any sold pets
     When I search for all sold pets
@@ -33,4 +31,10 @@ Feature: Manage a pet in the PetStore
     Examples: Pets not in stock
     |status|quantity|
     |sold  |0       |
+
+  Scenario: List pets available for selling
+    Given that I have available pets
+    When I search for all available pets
+    Then I receive a list of pets of size 7 pets available
+    And 3 pets have the name Lion
 
