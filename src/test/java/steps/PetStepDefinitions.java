@@ -53,7 +53,7 @@ public class PetStepDefinitions {
         petApi.deleteAllPetsByStatus(status);
     }
 
-    @Then("I receive a list of pets of size {int} pets")
+    @Then("I receive a list of pets of size {} pets")
     public void iReceiveAListOfSoldPetsWithSize(int size) {
         assertThat(actualPets.size(),is(size));
     }
