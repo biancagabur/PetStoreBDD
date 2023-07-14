@@ -1,5 +1,6 @@
 package steps;
 
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -19,6 +20,7 @@ public class PetStepDefinitions {
     private PetApi petApi;
     private List<Pet> actualPets;
     private Response actualPetResponse;
+
     public PetStepDefinitions(){
         petApi = new PetApi();
     }
@@ -39,12 +41,12 @@ public class PetStepDefinitions {
     @Then("I receive a list of {word} pets")
     public void iReceiveAListOfAvailablePets(String status) {
         actualPetResponse
-            .then()
+                .then()
                 .statusCode(HttpStatus.SC_OK)
                 .body(
-                    "size()",is(actualPets.size()),
+                        "size()",is(actualPets.size()),
                         "findAll { it.status == '"+ status +"'}.size()", is(actualPets.size())
-                    );
+                );
         assertThat(actualPets,is(not(empty())));
     }
 
@@ -54,7 +56,25 @@ public class PetStepDefinitions {
     }
 
     @Then("I receive a list of pets of size {} pets")
-    public void iReceiveAListOfSoldPetsWithSize(int size) {
-        assertThat(actualPets.size(),is(size));
+    public void iReceiveAListOfPetsWithSize(int quantity) {
+        assertThat(actualPets.size(),is(quantity));
+    }
+
+    @Then("I receive a list of pets of size {int} pets {word}")
+    public void iReceiveAListOfPetsOfSizePetsAvailable(int quantity, String status) {
+        actualPetResponse
+                .then()
+                .statusCode(HttpStatus.SC_OK)
+                .body(
+                        "size()", is(quantity),
+                        "findAll {it.status == '" + status + "'}.size()", is(quantity)
+                );
+    }
+
+    @And("{int} pets have the name {word}")
+    public void petsHaveTheNameLion(int quantity, String name) {
+        actualPetResponse.then()
+                .body("findAll {it.name.contains('"+name+"')}.size()", is(quantity));
+
     }
 }
