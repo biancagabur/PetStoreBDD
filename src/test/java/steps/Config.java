@@ -5,13 +5,16 @@ import io.cucumber.java.Before;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
+import support.api.PetApi;
 import support.api.UserApi;
 
 public class Config {
     private UserApi userApi;
+    private PetApi petApi;
 
     public Config(){
         userApi = new UserApi();
+        petApi = new PetApi();
     }
     @Before
     public void setup(){
@@ -31,5 +34,9 @@ public class Config {
     @After("@deleteAllUsers")
     public void deleteAllTheUsers(){
         userApi.deleteAllUsers();
+    }
+    @After("@DeleteExtraPets")
+    public void deleteExtraPets(){
+        petApi.deleteExtraPets("available");
     }
 }
